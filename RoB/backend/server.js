@@ -111,18 +111,17 @@ app.get("/api/model-name", (req, res) => {
 });
 
 // RøBguard: ML classifier endpoint
-// Called by robguard.js with { entropy_diff, size_diff, original_entropy }
+// Called by robguard.js with { entropy_diff, size_diff }
 // Spawns classify.py which loads the best model and returns 0 or 1
 const PYTHON = path.join(__dirname, "../../.venv/Scripts/python.exe");
 app.post("/api/classify", (req, res) => {
-  const { entropy_diff, size_diff, original_entropy } = req.body;
+  const { entropy_diff, size_diff } = req.body;
   execFile(
     PYTHON,
     [
       path.join(__dirname, "classify.py"),
       String(entropy_diff),
       String(size_diff),
-      String(original_entropy ?? 0),
     ],
     (err, stdout) => {
       if (err) {

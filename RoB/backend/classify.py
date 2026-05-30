@@ -15,11 +15,10 @@ with open(SCALER_PATH, "rb") as f:
 with open(MODEL_PATH, "rb") as f:
     model = pickle.load(f)
 
-entropy_diff     = float(sys.argv[1])
-size_diff        = float(sys.argv[2])
-original_entropy = float(sys.argv[3])
+entropy_diff = float(sys.argv[1])
+size_diff    = float(sys.argv[2])
 
-X = scaler.transform([[entropy_diff, size_diff, original_entropy]])
+X = scaler.transform([[entropy_diff, size_diff]])
 label = int(model.predict(X)[0])
 
 print(label)

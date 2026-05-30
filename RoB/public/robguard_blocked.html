@@ -41,16 +41,11 @@
         </div>
         <div class="border-t border-red-100"></div>
         <div class="flex items-center justify-between">
-          <span class="text-sm text-gray-500 font-medium">Original entropy</span>
-          <span class="text-sm font-mono text-gray-600" id="detail-orig">—</span>
-        </div>
-        <div class="flex items-center justify-between">
           <span class="text-sm text-gray-500 font-medium">Entropy change</span>
-          <span class="text-sm font-mono font-bold text-red-700" id="detail-ent">—</span>
-        </div>
-        <div class="text-xs text-gray-400 -mt-1">
-          Normal edits: near 0 &nbsp;|&nbsp; Encryption: near max possible for file type<br>
-          <span class="italic">(text: +2.0–4.0 &nbsp;·&nbsp; compressed/binary: +0.1–0.5)</span>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">Anomalous</span>
+            <span class="text-sm font-mono font-bold text-red-700" id="detail-ent">—</span>
+          </div>
         </div>
         <div class="border-t border-red-100"></div>
         <div class="flex items-center justify-between">
@@ -84,11 +79,9 @@
       const file  = params.get("file")  || "unknown";
       const ent   = parseFloat(params.get("ent")  || "0");
       const size  = parseInt(params.get("size")  || "0", 10);
-      const orig  = parseFloat(params.get("orig") || "0");
       const model = params.get("model") || "KNN";
 
       document.getElementById("detail-file").textContent  = file;
-      document.getElementById("detail-orig").textContent  = orig.toFixed(4) + " bits/byte";
       document.getElementById("detail-ent").textContent   =
         (ent >= 0 ? "+" : "") + ent.toFixed(4) + " bits/byte";
       document.getElementById("detail-size").textContent  =

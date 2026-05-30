@@ -100,7 +100,7 @@
         const resp = await fetch("/api/classify", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ entropy_diff, size_diff, original_entropy: origEnt }),
+          body: JSON.stringify({ entropy_diff, size_diff }),
         });
         const result = await resp.json();
 
@@ -110,7 +110,6 @@
             file: filename,
             ent: entropy_diff.toFixed(4),
             size: size_diff,
-            orig: origEnt.toFixed(4),
             model: _robModelName,
           });
           window.location.href = "/robguard_blocked.html?" + params.toString();
