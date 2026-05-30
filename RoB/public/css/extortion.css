@@ -1,0 +1,96 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1a1a1a;
+  color: #eee;
+  text-align: center;
+  padding: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background-color: #282828;
+  border: 2px solid #444;
+  border-radius: 8px;
+  padding: 30px;
+  max-width: 600px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+}
+
+h1 {
+  color: #e74c3c;
+  font-size: 2.8em;
+  margin-bottom: 15px;
+  text-shadow: 0 0 8px rgba(231, 76, 60, 0.6);
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.highlight {
+  color: #f39c12;
+  font-weight: bold;
+}
+
+.price-info {
+  font-size: 1.3em;
+  margin: 20px 0;
+  color: #2ecc71;
+  font-weight: bold;
+}
+
+.bitcoin-address {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.2em;
+  color: #76e73c;
+  word-break: break-all;
+  margin-top: 10px;
+  padding: 8px;
+  background-color: #3a3a3a;
+  border-radius: 4px;
+  display: inline-block;
+  border: 1px solid #555;
+}
+
+.countdown {
+  font-size: 1.8em;
+  color: #f39c12;
+  font-weight: bold;
+  margin-top: 25px;
+  padding: 8px;
+  background-color: #3a3a3a;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.action-button {
+  background-color: #3498db;
+  color: white;
+  padding: 8px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.8em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 30px;
+  text-decoration: none;
+  display: inline-block;
+  line-height: normal;
+}
+
+.action-button:hover {
+  background-color: #2980b9;
+}
+
+.footer-note {
+  margin-top: 30px;
+  font-size: 0.85em;
+  color: #aaa;
+}

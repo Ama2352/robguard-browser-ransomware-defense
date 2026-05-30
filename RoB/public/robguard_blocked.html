@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RøBguard — Attack Blocked</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body { font-family: "Inter", sans-serif; }
+      @keyframes pulse-shield {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.08); }
+      }
+      .shield-pulse { animation: pulse-shield 2s ease-in-out infinite; }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-red-50 via-white to-orange-50 min-h-screen flex items-center justify-center p-6">
+    <div class="bg-white rounded-3xl shadow-2xl border border-red-200 w-full max-w-2xl p-10 text-center">
+
+      <!-- Shield icon -->
+      <div class="shield-pulse inline-block mb-6">
+        <div class="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mx-auto border-4 border-red-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="text-3xl font-black text-red-700 mb-2">
+        RøBguard — Ransomware Attack Blocked
+      </h1>
+      <p class="text-gray-500 text-sm mb-8">
+        A malicious encryption attempt was detected and stopped in real-time.
+      </p>
+
+      <!-- Detection details card -->
+      <div class="bg-red-50 border border-red-200 rounded-2xl p-6 mb-8 text-left space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-500 font-medium">File targeted</span>
+          <span class="text-sm font-mono font-bold text-red-700" id="detail-file">—</span>
+        </div>
+        <div class="border-t border-red-100"></div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-500 font-medium">Original entropy</span>
+          <span class="text-sm font-mono text-gray-600" id="detail-orig">—</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-500 font-medium">Entropy change</span>
+          <span class="text-sm font-mono font-bold text-red-700" id="detail-ent">—</span>
+        </div>
+        <div class="text-xs text-gray-400 -mt-1">
+          Normal edits: near 0 &nbsp;|&nbsp; Encryption: near max possible for file type<br>
+          <span class="italic">(text: +2.0–4.0 &nbsp;·&nbsp; compressed/binary: +0.1–0.5)</span>
+        </div>
+        <div class="border-t border-red-100"></div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-500 font-medium">File size change</span>
+          <span class="text-sm font-mono font-bold text-red-700" id="detail-size">—</span>
+        </div>
+        <div class="border-t border-red-100"></div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-500 font-medium">ML Model decision</span>
+          <span class="text-sm font-bold text-red-700">⚠ Malicious (label = 1)</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-500 font-medium">Classifier used</span>
+          <span class="text-sm text-gray-700" id="detail-model">KNN</span>
+        </div>
+      </div>
+
+      <div class="bg-green-50 border border-green-200 rounded-2xl p-4 mb-8">
+        <p class="text-green-700 font-semibold text-sm">
+          ✅ Your files are safe. The encryption process was stopped before any data was overwritten.
+        </p>
+      </div>
+
+      <p class="text-xs text-gray-400">
+        Detection time: <span id="detail-time"></span>
+      </p>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const file  = params.get("file")  || "unknown";
+      const ent   = parseFloat(params.get("ent")  || "0");
+      const size  = parseInt(params.get("size")  || "0", 10);
+      const orig  = parseFloat(params.get("orig") || "0");
+      const model = params.get("model") || "KNN";
+
+      document.getElementById("detail-file").textContent  = file;
+      document.getElementById("detail-orig").textContent  = orig.toFixed(4) + " bits/byte";
+      document.getElementById("detail-ent").textContent   =
+        (ent >= 0 ? "+" : "") + ent.toFixed(4) + " bits/byte";
+      document.getElementById("detail-size").textContent  =
+        (size >= 0 ? "+" : "") + size + " bytes";
+      document.getElementById("detail-model").textContent = model;
+      document.getElementById("detail-time").textContent  =
+        new Date().toLocaleString();
+    </script>
+  </body>
+</html>

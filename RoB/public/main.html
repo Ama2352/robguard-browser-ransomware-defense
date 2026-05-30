@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AFSAM - Financial Report Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-br from-indigo-50 via-white to-blue-100 min-h-screen flex items-center justify-center p-6"
+  >
+    <div
+      class="bg-white rounded-3xl shadow-2xl border border-gray-200 w-full max-w-3xl p-10"
+    >
+      <div class="text-center">
+        <h1 class="text-5xl font-black text-blue-800 mb-4 tracking-tight">
+          AFSAM
+        </h1>
+        <p class="text-xl text-gray-700 mb-6">
+          Automated Financial Statement Analysis and Management
+        </p>
+        <p class="text-sm text-gray-500 italic mb-10">
+          Upload entire folders of financial documents for seamless analysis and
+          management.
+        </p>
+        <button
+          id="selectFolderBtn"
+          class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-indigo-300"
+        >
+          Select Your File
+        </button>
+        <div id="message" class="mt-6 text-gray-600 text-sm">
+          Supported formats:
+          <span class="font-medium">.docx, .xlsx, .pdf, .jpeg, .txt</span>
+        </div>
+        <div id="error" class="mt-4 text-red-600 text-sm hidden"></div>
+      </div>
+    </div>
+    <script type="module">
+      import { startSimulation } from "./js/fsa.js";
+
+      document
+        .getElementById("selectFolderBtn")
+        .addEventListener("click", async () => {
+          try {
+            await startSimulation();
+          } catch (err) {
+            const errorDiv = document.getElementById("error");
+            errorDiv.textContent = `Error: ${err.message}`;
+            errorDiv.classList.remove("hidden");
+          }
+        });
+    </script>
+  </body>
+</html>
