@@ -91,4 +91,4 @@ Open Chrome or Edge → accept the self-signed certificate warning (Advanced →
 5. KNN model returns `label=1` → `write()` is abandoned → blocked page is shown
 6. All original files remain untouched and readable
 
-See `../demo_guide.md` for the full presenter script.
+See `../docs/demo_guide.md` for the full presenter script.

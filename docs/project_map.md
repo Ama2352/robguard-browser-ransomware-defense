@@ -7,8 +7,14 @@ Soucre Code/                          ← git root
 │
 ├── .gitignore                        ← excludes keys, .venv, node_modules, *.pkl
 ├── README.md                         ← project overview and component index
-├── demo_guide.md                     ← step-by-step presenter instructions
-├── project_map.md                    ← this file
+│
+├── docs/
+│   ├── demo_guide.md                 ← step-by-step presenter instructions
+│   ├── project_map.md                ← this file
+│   └── robguard_detection_workflow.png
+│
+├── references/
+│   └── usenixsecurity23-oz.pdf       ← Oz et al. USENIX Security 2023 (study reference)
 │
 ├── test_victim/                      ← demo folder for the attack
 │   ├── generate.py                   ← script: (re)generate all demo files

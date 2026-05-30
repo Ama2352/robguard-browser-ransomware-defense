@@ -7,7 +7,7 @@ block ransomware encryption in real-time.
 ## Demo Workflow
 
 <p align="center">
-  <img src="robguard_detection_workflow.png" alt="RoBguard Demo Flow" width="100%">
+  <img src="docs/robguard_detection_workflow.png" alt="RoBguard Demo Flow" width="100%">
 </p>
 
 *Figure 1. Overall workflow of the RøB attack and RøBguard protection mechanism.*
@@ -19,9 +19,18 @@ block ransomware encryption in real-time.
 ```
 Soucre Code/
 ├── README.md           ← this file
-├── demo_guide.md       ← step-by-step presenter instructions
+├── docs/
+│   ├── demo_guide.md               ← step-by-step presenter instructions
+│   ├── project_map.md              ← full file tree, routes, demo flows
+│   └── robguard_detection_workflow.png
 ├── models/             ← put downloaded .pkl files here (see notebooks/)
-├── notebooks/          ← Google Colab notebook for ML training
+├── notebooks/
+│   ├── ransomware_detection.ipynb          ← main Colab notebook (source)
+│   ├── ransomware_detection_runned_1.ipynb ← training attempt 1 (with outputs)
+│   └── ransomware_detection_runned_2.ipynb ← training attempt 2 (with outputs)
+├── references/
+│   └── usenixsecurity23-oz.pdf ← Oz et al. (USENIX Security 2023) — study reference
+├── test_victim/        ← demo folder; run generate.py to (re)create victim files
 └── RoB/                ← HTTPS server + both demo frontends
     ├── backend/
     │   ├── server.js       ← Node.js HTTPS server (port 3000)
@@ -48,10 +57,11 @@ Soucre Code/
 | Attack page | `RoB/public/main.html` | Demo 1 — unprotected AFSAM |
 | Protected page | `RoB/public/main_protected.html` | Demo 2 — RøBguard active |
 | RøBguard hook | `RoB/public/js/robguard.js` | FSA API interception + entropy + ML call |
-| ML Classifier | `RoB/backend/classify.py` | Loads RF model, returns 0 (benign) or 1 (malicious) |
+| ML Classifier | `RoB/backend/classify.py` | Loads best model, returns 0 (benign) or 1 (malicious) |
 | Blocked page | `RoB/public/robguard_blocked.html` | Visual alert after attack is stopped |
-| Models | `models/` | RF model + scaler — **download from Colab first** |
+| Models | `models/` | best_model.pkl + scaler.pkl — **download from Colab first** |
 | Colab Notebook | `notebooks/ransomware_detection.ipynb` | Full ML training pipeline |
+| Training records | `notebooks/ransomware_detection_runned_*.ipynb` | Actual Colab runs with outputs |
 
 ---
 
@@ -69,19 +79,33 @@ with AES-256-GCM. The user sees a ransom page demanding 0.05 BTC.
 
 Identical site, but **RøBguard hooks** are injected before any page script runs.
 When the attack tries to write an encrypted file, the hook intercepts the
-`close()` call, computes the entropy change and size change, and calls the
-trained Random Forest model. The model returns `label=1` (malicious). The write
-is **abandoned** and the user is redirected to the blocked page — files untouched.
+`write()` call — before any ciphertext reaches disk — computes the entropy
+change and size change, and calls the trained ML model. The model returns
+`label=1` (malicious). The write is **abandoned** and the user is redirected
+to the blocked page — files untouched.
 
 ### ML Training (Google Colab)
 `notebooks/ransomware_detection.ipynb`
 
 The notebook generates synthetic file variants, extracts entropy/size features,
-trains and evaluates all four models (RF, DT, KNN, XGBoost), selects Random
-Forest, and exports the model files for download.
+trains and evaluates all four models (RF, DT, KNN, XGBoost) with 10-fold CV,
+selects the best model from actual results, and exports the model files for
+download. Two completed training runs with full outputs are kept in
+`notebooks/ransomware_detection_runned_1.ipynb` and `_runned_2.ipynb` for
+reference.
 
 ---
 
 ## Quick Start
 
-See **`demo_guide.md`** for complete setup and demo instructions.
+See **[`docs/demo_guide.md`](docs/demo_guide.md)** for complete setup and demo instructions.
+For the full file tree, server routes, and demo flow diagrams see **[`docs/project_map.md`](docs/project_map.md)**.
+
+---
+
+## References
+
+- **Oz, H., Aris, A., Levi, A., & Uluagac, A. S. (2023).** *A Survey on Ransomware: Evolution, Taxonomy, and Defense Solutions.*
+  USENIX Security 2023. [`references/usenixsecurity23-oz.pdf`](references/usenixsecurity23-oz.pdf)
+
+  Used as the primary study reference for the RøB attack model (browser-based ransomware via the File System Access API) and the RøBguard defense design.
