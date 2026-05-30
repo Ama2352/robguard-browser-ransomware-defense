@@ -4,6 +4,14 @@ This project demonstrates the **RøB (Ransomware over Browser)** attack and its
 countermeasure **RøBguard**, which uses ML-based FSA API hooking to detect and
 block ransomware encryption in real-time.
 
+## Demo Workflow
+
+<p align="center">
+  <img src="robguard_detection_workflow.png" alt="RoBguard Demo Flow" width="100%">
+</p>
+
+*Figure 1. Overall workflow of the RøB attack and RøBguard protection mechanism.*
+
 ---
 
 ## Project Structure
